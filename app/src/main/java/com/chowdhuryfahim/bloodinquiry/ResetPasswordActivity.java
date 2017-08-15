@@ -17,6 +17,7 @@ import com.chowdhuryfahim.bloodinquiry.CustomDesigns.StaticMethods;
 import com.chowdhuryfahim.bloodinquiry.DatabaseFiles.DataBaseHelper;
 import com.chowdhuryfahim.bloodinquiry.DatabaseFiles.DataFields;
 import com.chowdhuryfahim.bloodinquiry.DatabaseFiles.OrgFields;
+import com.chowdhuryfahim.bloodinquiry.models.DonorProfile;
 import com.chowdhuryfahim.bloodinquiry.models.EmailVerificationModel;
 import com.chowdhuryfahim.bloodinquiry.volley.GsonRequestIn;
 import com.chowdhuryfahim.bloodinquiry.volley.RequestTag;
@@ -80,8 +81,6 @@ public class ResetPasswordActivity extends AppCompatActivity implements Response
         } else {
             usernameEditText.setHint("Username");
         }
-
-
     }
 
     public void sendCode(View view){
@@ -91,13 +90,20 @@ public class ResetPasswordActivity extends AppCompatActivity implements Response
         }
         username = usernameEditText.getText().toString().trim();
 
-        if(type.equals("donor")){
-            if(!StaticMethods.validatePhone(username)){
+        if(type.equals("donor")) {
+            if (!StaticMethods.validatePhone(username)) {
                 usernameEditText.setError("Invalid Phone Number");
                 return;
             }
+            DonorProfile profile = dataBaseHelper.getDonorProfile(DataFields.DONOR_PHONE_FIELD + "=?", new String[]{username});
 
-            finalEmail = dataBaseHelper.getDonorProfile(DataFields.DONOR_PHONE_FIELD+"=?", new String[]{username}).donorEmail;
+            if (profile != null) {
+                finalEmail = profile.donorEmail;
+            } else {
+                showToast("Username was not found");
+                return;
+            }
+
             if(finalEmail.toLowerCase().equals("blank")){
                 takeEmail();
             } else {
@@ -152,6 +158,7 @@ public class ResetPasswordActivity extends AppCompatActivity implements Response
     @Override
     public void onErrorResponse(VolleyError error) {
         showToast("Connection Error");
+        if(pd.isShowing()) pd.dismiss();
     }
 
 

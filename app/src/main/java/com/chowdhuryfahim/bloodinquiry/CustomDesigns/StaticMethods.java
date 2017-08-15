@@ -6,8 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.chowdhuryfahim.bloodinquiry.DatabaseFiles.DataBaseHelper;
 import com.chowdhuryfahim.bloodinquiry.DatabaseFiles.DataFields;
@@ -32,21 +30,25 @@ public class StaticMethods {
     }
 
 
+
     /**
      * return true if phone is a valid phone number format other wise false
-     *@author Fahim Chowdhury
-     * @param phone
-     * @return true if phone is a valid phone number format other wise false
+     *Fahim Chowdhury
+     * phone
+     *true if phone is a valid phone number format other wise false
      */
     public static boolean validatePhone(String phone) {
-        return ((phone!=null && phone.length()==11) && (phone.charAt(0)=='0' && phone.charAt(1)=='1' && (phone.charAt(2) == '1' || phone.charAt(2) == '5' ||
+        //it will check for characters other than digits, length, valid format
+        return (Pattern.matches("\\d+", phone) && (phone!=null && phone.length()==11) && (phone.charAt(0)=='0' && phone.charAt(1)=='1' && (phone.charAt(2) == '1' || phone.charAt(2) == '5' ||
                 phone.charAt(2) == '6' || phone.charAt(2) == '7' || phone.charAt(2) == '8' || phone.charAt(2) == '9')));
     }
 
+
+
     /**
      *
-     * @param context
-     * @return true if device is online otherwise false
+     *context
+     *true if device is online otherwise false
      */
 
     public static boolean isOnline(Context context){
@@ -80,6 +82,12 @@ public class StaticMethods {
         Matcher matcher = pattern.matcher(email);
         return  matcher.matches();
     }
+
+
+    //This method will download
+/*    public static boolean downloadData(Context context){
+
+    }*/
 
 
 }
