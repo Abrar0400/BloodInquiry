@@ -29,6 +29,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+
+
         loginPreference = new LoginPreference(this);
         dataBaseHelper = new DataBaseHelper(SplashActivity.this);
 
@@ -45,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
                 loginPreference.setBooleanPreferences(LoginPreference.IS_DONOR_TABLE_UPDATED, true);
             }
         }
+
 
         new async().execute();
     }
