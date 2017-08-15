@@ -83,7 +83,7 @@ public class StaticMethods {
         return  matcher.matches();
     }
 
-    //Kene Solor O vai
+    //Kene Solor O Boin
     //This method will download
 /*    public static boolean downloadData(Context context){
 
